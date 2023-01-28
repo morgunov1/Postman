@@ -1,0 +1,361 @@
+http://162.55.220.72:5005/first
+1. Надіслати запит.
+2. Статус код 200
+3. Перевірити, що body приходить правильний string.
+
+http://162.55.220.72:5005/user_info_3
+1. Надіслати запит.
+
+Method POST, URL http://162.55.220.72:5005/user_info_3
+
+2. Статус код 200
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+3. Спарсіть response body у json.
+
+let responseData = pm.response.json();
+
+4. Перевірити, що name у відповіді одно name s request (name вбити руками.)
+
+pm.test("Your test name", function () {
+   pm.expect(responseData.name).to.eql('Roman');
+});
+
+5. Перевірити, що age у відповіді одно age s request (age вбити руками.)
+
+pm.test("Your test age", function () {
+   pm.expect(responseData.age).to.eql('25');
+});
+
+6. Перевірити, що salary у відповіді одно salary s request (salary вбити руками.)
+
+pm.test("Your test salary", function () {
+    pm.expect(responseData.salary).to.eql(1500);
+});
+
+7. Спарсить request.
+
+let req = request.data
+
+8. Перевірити, що name у відповіді одно name s request (name забрати з request.)
+
+pm.test("Response name = Request name", function () {
+   pm.expect(responseData.name).to.eql(req.name);
+});
+
+9. Перевірити, що age у відповіді дорівнює age s request (age забрати з request.)
+
+pm.test("Response age = Request age", function () {
+   pm.expect(responseData.age).to.eql(req.age);
+});
+
+10. Перевірити, що salary у відповіді дорівнює salary s request (salary забрати з request.)
+
+pm.test("Response salary = Request salary", function () {
+   pm.expect(responseData.salary).to.eql(+req.salary);
+});
+
+11. Вивести в консоль параметр family із response.
+
+pm.test("Console family response", function () {
+    console.log(responseData.family)
+});
+
+
+12. Перевірити що u_salary_1_5_year у відповіді одно salary*4 (salary забрати з request)
+
+pm.test("Salary * 4 in 1.5 years", function () {    
+    pm.expect(responseData.family.u_salary_1_5_year).to.eql(4 * req.salary);
+});
+
+
+------------------------------------------------------------------------------------------------
+
+http://162.55.220.72:5005/object_info_3
+1. Надіслати запит.
+
+Method GET, URL http://162.55.220.72:5005/object_info_3
+
+2. Статус код 200
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+3. Спарсіть response body у json.
+
+let resp = pm.response.json(); 
+
+4. Спарсить request.
+
+let req = pm.request.url.query.toObject();
+
+5. Перевірити, що name у відповіді одно name s request (name забрати з request.)
+
+pm.test("Response name = Request name", function () {
+    pm.expect(resp.name).to.eql(req.name)
+});
+
+6. Перевірити, що age у відповіді дорівнює age s request (age забрати з request.)
+
+pm.test("Response age = Request age", function () {
+    pm.expect(resp.age).to.eql(req.age)
+});
+
+7. Перевірити, що salary у відповіді дорівнює salary s request (salary забрати з request.)
+
+pm.test("Response salary = Request salary", function () {
+    pm.expect(resp.salary).to.eql(+req.salary)
+});
+
+8. Вивести в консоль параметр family із response.
+
+pm.test("Console family response", function () {
+     console.log(resp.family)
+});
+
+
+9. Перевірити, що параметр dog має параметри name.
+
+pm.test("Dog has name", function () {
+    pm.expect(resp.family.pets.dog).haveOwnProperty("name")
+});
+
+10. Перевірити, що параметр dog має параметри age.
+
+pm.test("Dog has age", function () {
+    pm.expect(resp.family.pets.dog).haveOwnProperty("age")
+});
+
+11. Перевірити, чи параметр name має значення Luky.
+
+pm.test("Dog name has value Luky", function () {
+    pm.expect(resp.family.pets.dog.name).to.eql("Luky");
+});
+
+12. Перевірити, чи параметр age має значення 4.
+
+pm.test("Dog age has value 4", function () {
+    pm.expect(resp.family.pets.dog.age).to.eql(+"4");
+});
+
+---------------------------------------------------------------------
+
+http://162.55.220.72:5005/object_info_4
+
+1. Надіслати запит.
+
+Method GET, URL http://162.55.220.72:5005/object_info_4
+
+2. Статус код 200
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+3. Спарсіть response body у json.
+
+let resp = pm.response.json();
+
+
+4. Спарсить request.
+
+let req = pm.request.url.query.toObject();
+
+5. Перевірити, що name у відповіді одно name s request (name забрати з request.)
+
+pm.test("Response name = Request name", function () {
+    pm.expect(resp.name).to.eql(req.name)
+});
+
+6. Перевірити, що age у відповіді одно age з request (age забрати з request.)
+
+pm.test("Response age = Request age", function () {
+    pm.expect(resp.age).to.eql(+req.age)
+});
+
+
+7. Вивести в консоль параметр salary із request.
+
+pm.test("Console salary request", function () {
+    console.log(req.salary)
+});
+
+8. Вивести в консоль параметр salary з response.
+
+
+
+pm.test("Console salary response", function () {
+    console.log(resp.salary)
+});
+
+9. Вивести в консоль 0-й елемент параметру salary з response.
+
+pm.test("The 0th element of the salary", function () {
+    console.log("the 0th element of the salary is ",resp.salary)
+});
+
+
+10. Вивести в консоль 1-й елемент параметра salary параметр salary із response.
+
+pm.test("The first element of the salary", function () {
+    console.log("the first element of the salary is ",+ resp.salary[1])
+});
+11. Вивести в консоль 2-й елемент параметра salary параметр salary із response.
+
+pm.test("The 2nd element of the salary", function () {
+    console.log("the 2nd element of the salary is ",+ resp.salary[2])
+});
+
+12. Перевірити, що 0 елемент параметра salary дорівнює salary з request (salary забрати з request.)
+
+pm.test("Response salary[0] = Request salary", function () {
+    pm.expect(resp.salary[0]).to.eql(+req.salary)
+});
+
+13. Перевірити, що 1-й елемент параметра salary дорівнює salary*2 із request (salary забрати з request.)
+
+pm.test("Response salary[1] = Request salary*2", function () {
+    pm.expect(+resp.salary[1]).to.eql(+req.salary*2)
+});
+
+14. Перевірити, що 2-й елемент параметра salary дорівнює salary*3 із request (salary забрати з request.)
+
+
+pm.test("Response salary[2] = Request salary*3", function () {
+    pm.expect(+resp.salary[2]).to.eql(+req.salary*3)
+});
+---------------------------------------------------------------------------------------------------------------------------------------------------
+15. Створити в оточенні змінну name
+
+After clicking New button at top right, choose Environment and give it a name. In the Environment add variable name and set value Roman.
+
+16. Створити в оточенні змінну age
+
+In the Environment add variable age and set value 25.
+
+17. Створити в оточенні змінну salary
+
+In the Environment add variable salary and set value 1500.
+
+18. Передати до оточення змінну name
+
+let name = req.name
+pm.environment.set("name", name);
+
+19. Передати в оточення змінну age
+
+let age = req.age
+pm.environment.set("age", age);
+
+20. Передати в оточення змінну salary
+
+let salary = req.salary
+pm.environment.set("salary", salary);
+
+21. Написати цикл, який виведе в консоль по порядку елементи списку з параметра salary.
+
+for (let i = 0; i < resp.salary.length ; i++) {
+console.log(resp.salary[i])
+};
+
+--------------------------------------------------------------------------------------------
+http://162.55.220.72:5005/user_info_2\
+
+1. Вставити параметр salary з оточення до request
+
+In Body tab choose form-data. Set KEY salary and VALUE {{salary}}.
+
+2. Вставити параметр age з оточення до age
+
+In Body tab choose form-data. Set KEY age and VALUE {{age}}.
+
+3. Вставити параметр name з оточення до name
+
+In Body tab choose form-data. Set KEY name and VALUE {{name}}
+
+4. Надіслати запит.
+
+Method POST, URL hhttp://162.55.220.72:5005/user_info_2
+
+5. Статус код 200
+
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+6. Спарсіть response body у json.
+
+let resp = pm.response.json()
+
+7. Спарсить request.
+
+let req = request.data;
+
+8. Перевірити, чи json response має параметр start_qa_salary
+
+pm.test("start_qa_salary in response", function () {
+    pm.expect(resp).haveOwnProperty("start_qa_salary")
+});
+
+9. Перевірити, чи json response має параметр qa_salary_after_6_months
+
+pm.test("qa_salary_after_6_months in response", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_6_months")
+});
+
+
+10. Перевірити, чи json response має параметр qa_salary_after_12_months
+
+
+11. Перевірити, чи json response має параметр qa_salary_after_1.5_year
+
+pm.test("qa_salary_after_12_months in response", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_12_months")
+});
+
+12. Перевірити, чи json response має параметр qa_salary_after_3.5_years
+
+pm.test("qa_salary_after_3.5_years in response", function () {
+    pm.expect(resp).haveOwnProperty("qa_salary_after_3.5_years")
+});
+
+13. Перевірити, чи json response має параметр person
+
+pm.test("person in response", function () {
+    pm.expect(resp).haveOwnProperty("person")
+});
+
+14. Перевірити, що параметр start_qa_salary дорівнює salary із request (salary забрати з request.)
+
+pm.test ("start_qa_salary = salary from the request", function () {
+    pm.expect(resp.start_qa_salary).to.eql(+req.salary)
+});
+
+15. Перевірити, що параметр qa_salary_after_6_months дорівнює salary*2 із request (salary забрати з request.)
+
+pm.test ("qa_salary_after_6_months = salary*2 from the request", function () {
+    pm.expect(resp.qa_salary_after_6_months).to.eql(req.salary*2)
+});
+
+16. Перевірити, що параметр qa_salary_after_12_months дорівнює salary*2.7 із request (salary забрати з request.)
+
+pm.test ("qa_salary_after_12_months = salary*2.7 from the request", function () {
+    pm.expect(resp.qa_salary_after_12_months).to.eql(req.salary*2.7)
+});
+
+17. Перевірити, що параметр qa_salary_after_1.5_year дорівнює salary*3.3 із request (salary забрати з request.)
+
+pm.test ("qa_salary_after_1.5_year = salary*3.3 from the request", function () {
+    pm.expect(resp['qa_salary_after_1.5_year']).to.eql(+req.salary*3.3)
+});
+
+18. Перевірити, що параметр qa_salary_after_3.5_years дорівнює salary*3.8 із request (salary забрати з request.)
+
+pm.test ("qa_salary_after_3.5_years = salary*3.8 from the request", function () {
+    pm.expect(resp['qa_salary_after_3.5_years']).to.eql(+req.salary*3.8)
+});
+
